@@ -5,17 +5,21 @@
 <title>Insert title here</title>
 <script src="js/jquery.js"></script>
 <script src="js/seedrandom.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
 #randomTable {
-    font-family: monospace;
+    font-family: Arial, monospace;
     font-size: 2.0em;
+}
+body{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "微軟正黑體";
 }
 </style>
 </head>
 <body>
 
 請輸入亂數表的編號：<input type="text" id="txtSeed" value="1234" />
-&nbsp;<input type="button" id="btnGo" value="產生亂數表" />
+&nbsp;<input type="button" class="btn btn-info" id="btnGo" value="產生亂數表" />
 
 <div id="randomTable">
 </div>

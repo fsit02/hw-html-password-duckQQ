@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>亂數表產生</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/seedrandom.js"></script>
+    
+    <style>
+        #randomTable {
+        font-family: Arial, monospace;
+        font-size: 2.0em;
+    }
+    
+    body {
+                  position: relative;
+                background-image:url( 'img/bg_sora1.gif' );
+                background-repeat:repeat;
+          }
+    
+    </style>
+</head>    HW-rmcode-manualHW-rmcode-manualHW-rmcode-manual
+    
+
+<body>
+   <div class="container"> 
+   <div id="home">
+    <h1>產生屬於自己的密碼表吧！</h1>
+    <p>只要按下按鈕，就能產生一個專用的亂數表&nbsp; <p><br></div>
+    
+   
+
+    <!-- navTabs-->
+     <nav class="navbar navbar-light bg-faded">
+      <div class="container-fluid">
+        <div class="navbar-header">
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#home">首頁</a></li>
+          <li><a href="manual.html">說明步驟</a></li>
+          <li><a href="#about" data-toggle="modal">關於</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    
+    
+<div class="row"> 
+        <div class="col-sm-5">
+        <p id="step1"><b>步驟1. 請決定亂數表內容：</b>
+        <input type="checkbox" id="num" name= "pool" value="number" />數字
+        &nbsp;<input type="checkbox" id="nonCap" name = "pool" value="lower"/>英文小寫
+        &nbsp;<input type="checkbox" id="Cap" name = "pool" value="upper" />英文大寫 </p>
+         <p>  
+            <form>
+            <div class="form-group">
+            <b>步驟2. 請決定亂數表行數:</b>
+            <select class="input-small" id="lines">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            </select></form> </div>
+        </p>
+        <p><b>步驟3. 請輸入亂數表的編號：</b><input type="text" id="txtSeed" maxlength= "10" size="10" value="1234" />
+        <input type="button" class="btn btn-info" id="btnGo" 
+        onClick="setsPool()" data-toggle="tooltip" title="按下將產生一組亂數表" value="產生亂數表"/></p></div>
+        <div class="col-sm-7" id="randomTable" ></div>
+</div>
+
+
+<span class="glyphicons glyphicons-search"></span>看不懂怎麼用？請見<a href="manual.html" target="_blank" >使用方法</a></br></p> </p>
+
+<!-- Footer -->
+<div data-role="footer">2016/10/作業</div>
+<div id="about" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">老師好</h4>
+      </div>
+      <div class="modal-body">
+        <p>我是吳維芸</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+    
+</div>
+
+
+
+
+<div id="debug"></div>
+</div>
+
+<script>  
+    var sPool =""; 
+
+//當打勾時，選擇不同的sPool，否則預設只有數字
+function setsPool(){
+    
+     //debug.innerHTML = sPool;
+    var useNum = document.getElementById("num").checked;
+    var usenoCap = document.getElementById("nonCap").checked;
+    var useCap = document.getElementById("Cap").checked;
+    
+    if(useNum){
+        sPool += "0123456789";
+    }
+    
+    if(usenoCap){
+        sPool += "abcdefghijkmnpqrstuvwxyz";
+    }
+    
+    if(useCap){
+        sPool += "ABCDEFGHJKLMNPQRSTUVWXYZ";
+    } 
+    //debug.innerHTML = sPool;
+}
+
+
+$("#btnGo").click(function () {
+    var result = "";
+    
+	// 純數字:
+	//var sPool = "0123456789";
+    // 數字+小寫字母: (去除 l, o)
+    // if(usenoCap == true)
+    // var sPool = "abcdefghijkmnpqrstuvwxyz0123456789";
+    
+    // // 數字+大小寫字母: (去除 I, O, l, o)
+    //var sPool = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789";
+
+    Math.seedrandom($("#txtSeed").val()); // 設定亂數種子
+    
+    var lines = document.getElementById("lines").value;
+    
+    
+	var iRandom = 0; var ch = "?";
+	for (iRow = 1; iRow <= lines; iRow++) {
+		var sLine = (iRow + 100).toString().substr(1, 2) + ": ";
+        
+		for (iCol = 1; iCol <= 10; iCol++) {
+			iRandom = Math.floor(Math.random() * sPool.length);
+			ch = sPool.substr(iRandom, 1);
+			sLine += ch;
+			//debug.innerHTML = sLine;
+		}
+		result += sLine + "<br>"; //debug.innerHTML = result;
+	}
+	$("#randomTable").html(result);
+	sPool = "";
+});
+
+</script>
+
+    
+</body>    
+    
+</html>
